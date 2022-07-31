@@ -17,4 +17,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.use('/v1',(req, res, next)=>{{
+    res.status(200).json({
+        message: "Hello World!"
+    })
+}})
+
 module.exports = app;
