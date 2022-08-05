@@ -4,9 +4,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config()
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
 const app = express();
 
 app.use(logger('dev'));
@@ -15,13 +12,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+/**
+ * Auth Section.
+ */
+app.use('/v1', require('./modules/auth/routes.js'))
+/**
+ * Auth Section End 
+ */
 
-app.use('/v1',(req, res, next)=>{{
-    res.status(200).json({
-        message: "Hello World!"
-    })
-}})
+require('./modules/auth/config/passport');
+
 
 module.exports = app;
