@@ -32,6 +32,12 @@ const loginController = async(req, res, next)=>{
     try{
         const user = await User.findOne({ email : req.body.email });
 
+        if(!user){
+            return res.status(401).json({
+                message: "Unauthorized"
+            })
+        }
+
         if(user){
             const isValidPassword = await bcrypt.compare(req.body.password, user.password);
             
@@ -47,7 +53,7 @@ const loginController = async(req, res, next)=>{
             }
             
             return res.status(401).json({
-                message: "Authentication failed"
+                message: "Unauthorized"
             })
            
         }

@@ -44,15 +44,21 @@ const userValidators = [
 ]
 
 const ValidationResult = (req, res, next)=>{
-    
     const errors = validationResult(req);
+
+    const errorObject = {}
+    const responseError = errors.errors.map(error=>{
+        // console.log(error)
+        errorObject[error.param] = error.msg
+    })
+    // console.log(errorObject)
 
     if (errors.isEmpty()) {
         return next()
     }
 
-    res.status(500).json({
-        errors
+    res.status(403).json({
+        errorObject
     })
 }
 
