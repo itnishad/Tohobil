@@ -16,7 +16,7 @@ const UserSchema = mongoose.Schema({
 
     password: {type:String , require:true}
     
-})
+}, { timestamps: true })
 
 // var hash_password =  UserSchema.statics.hash_password =  function( password ) {
 //     let salt = bcrypt.genSaltSync(); // enter number of rounds, default: 10

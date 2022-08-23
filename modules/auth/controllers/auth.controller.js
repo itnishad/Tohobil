@@ -16,6 +16,18 @@ const registerController = async (req, res, next) =>{
         const userModel = await new User(req.body);
         const user = await userModel.save();
         const token = Token(user)
+
+        const profile = {
+            user: user._id,
+            firstName:"",
+            lastName:"",
+            website: "",
+            bio: ""
+          }
+      
+          const emitter = req.app.get('eventEmitter');
+          emitter.emit("createProfile", profile);
+
         res.status(201).json({
             Message: "User Successfully Register",
             User: user.toJSON(),
