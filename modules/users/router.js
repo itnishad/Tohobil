@@ -3,10 +3,12 @@ const passport = require('passport');
 const router = express.Router();
 
 const {GetUserProfile,
-UpdateuserProfile} = require('./controllers/user.controller')
+UpdateuserProfile,
+GetPaymentHistory} = require('./controllers/user.controller')
 
 router.all('*', passport.authenticate('jwt', {session: false}))
 router.get('/profile', GetUserProfile);
-router.post('/profile/update',UpdateuserProfile)
+router.post('/profile/update',UpdateuserProfile);
+router.get("/payment/all/:id", GetPaymentHistory);
 
 module.exports = router;

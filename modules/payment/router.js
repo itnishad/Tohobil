@@ -3,17 +3,12 @@ const passport = require('passport');
 const app = require('../../app');
 const router = express.Router();
 
-const {PaymentInit} = require('./controllers/payment.controller');
+const {PaymentInit,
+PaymentSuccess} = require('./controllers/payment.controller');
 
-router.post ('/init/:id', PaymentInit)
+router.post ('/init/:Uid/:Cid', PaymentInit)
 
-router.post('/success', async(req, res, next)=>{
-    return res.status(200).json({
-        data: req.body
-    })
-
-    // return res.status(200).redirect("http://localhost:3000")
-})
+router.post('/success', PaymentSuccess)
 
 router.post('/fail', async(req, res, next)=>{
     return res.status(200).json({
