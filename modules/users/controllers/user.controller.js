@@ -38,8 +38,21 @@ const getPaymentHistory = async (req, res, next) => {
   }
 };
 
+const getAllUserList = async (req, res, next) =>{
+    try {
+
+      const userList = await services.GetUserList();
+      res.status(200).send(userList);
+      
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+}
+
 module.exports = {
   GetUserProfile: getUserProfile,
   UpdateuserProfile: updateuserProfile,
   GetPaymentHistory: getPaymentHistory,
+  GetAllUserList: getAllUserList
 };

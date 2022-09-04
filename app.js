@@ -17,8 +17,10 @@ const app = express();
 
 app.use(logger('dev'));
 app.use(cors({
-    origin:["http://localhost:3000","https://sandbox.sslcommerz.com"]
+    origin:["http://localhost:3000","https://sandbox.sslcommerz.com", "http://192.168.0.100:3000"]
 }))
+
+// app.use(cors())
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,9 +35,10 @@ app.use('/v1/auth', require('./modules/auth/routes.js'))
 /**
  * Auth Section End 
  */
-app.use('/v1/user', require('./modules/users/router'))
-app.use('/v1/campaign', require('./modules/campaigns/router.js'))
+app.use('/v1/user', require('./modules/users/router'));
+app.use('/v1/campaign', require('./modules/campaigns/router.js'));
 app.use('/v1/payment', require('./modules/payment/router'));
+app.use('/v1/admin', require('./modules/admin/router'));
 
 require('./modules/auth/config/passport');
 

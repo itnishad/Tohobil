@@ -55,7 +55,10 @@ const paymentInit = async (req, res, next) => {
     value_b: campaignId,
   };
 
+  // console.log(updateData);
+
   const sslcommer = new SSLCommerzPayment("testbox", "qwerty", false);
+
   sslcommer.init(updateData).then(async (data) => {
     //process the response that got from sslcommerz
     //https://developer.sslcommerz.com/doc/v4/#returned-parameters
@@ -65,6 +68,7 @@ const paymentInit = async (req, res, next) => {
 
       // return res.status(200).redirect(data?.GatewayPageURL);
     }
+    console.log(data);
     return res.status(400).json({
       message: "SSL error",
     });
@@ -94,6 +98,7 @@ const paymentSuccess = async (req, res, next) => {
     );
 
     if (Ucampaign) {
+     const emitter = req.app.get('eventEmitter');
       emitter.emit("createPaymentHistory", userBody);
       emitter.emit("createCampaignHistory", campaignBody);
     }else{

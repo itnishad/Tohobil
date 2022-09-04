@@ -32,6 +32,11 @@ const campaignSchema = new mongoose.Schema({
 
     filename: String,
 
+    active: {
+        type: Boolean,
+        default: false
+    }
+
 }, { timestamps: true })
 
 module.exports = new mongoose.model('Campaign', campaignSchema);

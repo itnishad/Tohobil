@@ -1,5 +1,6 @@
 const Profile = require('../model/profile.model')
 const UserPayment = require('../model/userpayment.model')
+const User = require('../model/user.model')
 
 const getUserProfile = async(id)=>{
     const userProfile = await Profile.find({user: id})
@@ -21,9 +22,15 @@ const getUserPayment = async(id)=>{
     return result;
 }
 
+const getUserList = async()=>{
+    const result = await User.find({});
+    return result;
+}
+
 
 module.exports = {
     GetUserProfile: getUserProfile,
     UserProfilUpdate: userProfilUpdate,
-    GetUserPayment: getUserPayment
+    GetUserPayment: getUserPayment,
+    GetUserList: getUserList
 }
