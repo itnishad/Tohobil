@@ -1,4 +1,6 @@
 const CamlpaignModel = require("../../campaigns/model/campaigns.mode");
+const CampaignPayentModel = require('../../campaigns/model/campaignPayment.model')
+
 const paymentInitial = async () => {};
 
 const getCampaign = async (_id) => {
@@ -11,8 +13,20 @@ const updateCampaignAmount = async (_id, amount) => {
   return result;
 };
 
+const campaignHistory = async(campaignId)=>{
+  const result = await CampaignPayentModel.find({
+    campaign: campaignId
+  })
+  .populate({
+    path: "user",
+  })
+  .sort({ createdAt: -1 });
+  return result;
+}
+
 module.exports = {
   PaymentInitial: paymentInitial,
   GetCampaign: getCampaign,
-  UpdateCampaignAmount: updateCampaignAmount
+  UpdateCampaignAmount: updateCampaignAmount,
+  CampaignHistory: campaignHistory
 };

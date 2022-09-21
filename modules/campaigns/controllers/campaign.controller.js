@@ -20,8 +20,10 @@ const createCampaign = async (req, res, next) => {
 };
 
 const getAllCampaigns = async (req, res, next) => {
+
+  const {limit} = req.query;
   try {
-    let campaigns = await campaignServices.AllCampaign();
+    let campaigns = await campaignServices.AllCampaign(limit);
     res.status(200).send(campaigns);
   } catch (error) {
     console.log(error);
@@ -36,7 +38,7 @@ const getCampaign = async (req, res, next) => {
     if (sCampaign.length <= 0) {
       throw new Error("campaign not found");
     }
-    res.status(200).send(sCampaign);
+    res.status(200).json(sCampaign);
   } catch (error) {
     console.log(error);
     next(error);
@@ -80,10 +82,36 @@ const updateCampaign = async (req, res, next) => {
   }
 };
 
+const inactiveACampaign = async(req, res, next)=>{
+  const campaignId = req.params.id;
+  try {
+    const result = await campaignServices.UpdateToInactive(campaignId);
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+}
+
+const activeACampaign = async(req, res, next)=>{
+  const campaignId = req.params.id;
+console.log(campaignId)
+  try {
+    const result = await campaignServices.UpdateToActive(campaignId);
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+
+}
+
 module.exports = {
   CreateCampaign: createCampaign,
   GetAllCampaign: getAllCampaigns,
   GetCampaign: getCampaign,
   GetUserCampaign: getUserCampaign,
   UpdateCampaign: updateCampaign,
+  InactiveACampaign: inactiveACampaign,
+  ActiveACampaign: activeACampaign
 };

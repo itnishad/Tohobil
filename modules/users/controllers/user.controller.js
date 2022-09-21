@@ -50,9 +50,21 @@ const getAllUserList = async (req, res, next) =>{
     }
 }
 
+const getUserProfileById = async (req,res,next)=>{
+  const userId = req.params.userId;
+  try {
+    const userProfile = await services.GetUserProfile(userId);
+    res.status(200).json(userProfile);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+}
+
 module.exports = {
   GetUserProfile: getUserProfile,
   UpdateuserProfile: updateuserProfile,
   GetPaymentHistory: getPaymentHistory,
-  GetAllUserList: getAllUserList
+  GetAllUserList: getAllUserList,
+  GetUserProfileById: getUserProfileById
 };

@@ -21,7 +21,7 @@ const createACampaign = async (body, fileName, user) => {
   const campaign = await campaignModel.save();
 };
 
-const allCampaign = async () => {
+const allCampaign = async (limit=null) => {
   const campaigns = await Campaign.find({})
     .populate({
       path: "user",
@@ -30,7 +30,8 @@ const allCampaign = async () => {
     .select({
       createdAt: 0,
       updatedAt: 0,
-    });
+    })
+    .limit(limit);
   return campaigns;
 };
 
@@ -58,8 +59,20 @@ const userCampaign = async (id) => {
 };
 
 const updateCampaignBody = async(_id,updateBody)=>{
-  console.log(updateBody)
+  // console.log(updateBody)
   return result = await Campaign.findOneAndUpdate({_id},updateBody,{
+    new: true
+  })
+}
+
+const updateToInactive = async(_id)=>{
+  return result = await Campaign.findOneAndUpdate({_id},{active: false},{
+    new: true
+  })
+}
+
+const updateToActive = async(_id)=>{
+  return result = await Campaign.findOneAndUpdate({_id},{active: true},{
     new: true
   })
 }
@@ -69,5 +82,7 @@ module.exports = {
   AllCampaign: allCampaign,
   SingleCampaign: singleCampaign,
   UserCampaign: userCampaign,
-  UpdateCampaignBody:updateCampaignBody
+  UpdateCampaignBody:updateCampaignBody,
+  UpdateToInactive: updateToInactive,
+  UpdateToActive: updateToActive
 };

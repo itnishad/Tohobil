@@ -19,7 +19,9 @@
         GetAllCampaign,
         GetCampaign,
         GetUserCampaign,
-        UpdateCampaign} = require('./controllers/campaign.controller')
+        UpdateCampaign,
+        InactiveACampaign,
+        ActiveACampaign} = require('./controllers/campaign.controller')
 
 let upload = multer({
     dest: UPLOADS_FOLDER
@@ -27,6 +29,8 @@ let upload = multer({
 router.get('/get-all-campaigns', GetAllCampaign);
 router.get('/details/:id', GetCampaign);
 router.post('/update/:id',Imguploder, UpdateCampaign);
+router.put('/inActive/:id', InactiveACampaign);
+router.put('/Active/:id', ActiveACampaign);
 
  router.all('*', passport.authenticate('jwt', {session: false}))
 

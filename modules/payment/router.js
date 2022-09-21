@@ -4,7 +4,9 @@ const app = require('../../app');
 const router = express.Router();
 
 const {PaymentInit,
-PaymentSuccess} = require('./controllers/payment.controller');
+PaymentSuccess, CampaignPaymentHistory} = require('./controllers/payment.controller');
+
+router.get('/history/:campaignId', CampaignPaymentHistory);
 
 router.post ('/init/:Uid/:Cid', PaymentInit)
 
@@ -28,4 +30,4 @@ router.post('/ipn', async(req, res, next)=>{
     })
 })
 
-module.exports = router
+module.exports = router;

@@ -28,6 +28,6 @@
         type: Number
     }
 
- })
+ }, { timestamps: true })
 
  module.exports = new mongoose.model("CampaignPaymentHistory", CampaignPaymentSchema);

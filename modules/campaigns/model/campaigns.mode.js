@@ -26,6 +26,10 @@ const campaignSchema = new mongoose.Schema({
         type: Date
     },
 
+    country:{
+        type:String
+    },
+
     category:{
         type: String
     },

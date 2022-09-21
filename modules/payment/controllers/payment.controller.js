@@ -59,7 +59,7 @@ const paymentInit = async (req, res, next) => {
 
   const sslcommer = new SSLCommerzPayment("testbox", "qwerty", false);
 
-  sslcommer.init(updateData).then(async (data) => {
+  sslcommer.init(updateData).then((data) => {
     //process the response that got from sslcommerz
     //https://developer.sslcommerz.com/doc/v4/#returned-parameters
 
@@ -76,6 +76,7 @@ const paymentInit = async (req, res, next) => {
 };
 
 const paymentSuccess = async (req, res, next) => {
+  //All Amount by user
   const userBody = {
     user: req.body.value_a,
     transaction: req.body.bank_tran_id,
@@ -83,12 +84,13 @@ const paymentSuccess = async (req, res, next) => {
     amount: req.body.amount,
   };
 
+  //Campaign Amount by user
   const campaignBody = {
     user: req.body.value_a,
     campaign: req.body.value_b,
     transaction: req.body.bank_tran_id,
     cardtype: req.body.card_type,
-    Amount: req.body.amount,
+    amount: req.body.amount,
   };
 
   try {
@@ -114,7 +116,14 @@ const paymentSuccess = async (req, res, next) => {
   }
 };
 
+const campaignPaymentHistory = async(req, res, next)=>{
+  const campaignId = req.params.campaignId;
+  const campaignHistoryRes = await services.CampaignHistory(campaignId);
+  res.json(campaignHistoryRes);
+}
+
 module.exports = {
   PaymentInit: paymentInit,
   PaymentSuccess: paymentSuccess,
+  CampaignPaymentHistory: campaignPaymentHistory
 };

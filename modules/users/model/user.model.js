@@ -14,6 +14,8 @@ const UserSchema = mongoose.Schema({
 
     email:{type: String, trim: true, require: true},
 
+    admin:{type: Boolean, default:false},
+
     password: {type:String , require:true}
     
 }, { timestamps: true })
