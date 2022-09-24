@@ -8,26 +8,26 @@ PaymentSuccess, CampaignPaymentHistory} = require('./controllers/payment.control
 
 router.get('/history/:campaignId', CampaignPaymentHistory);
 
-router.post ('/init/:Uid/:Cid', PaymentInit)
+router.post ('/init/:Uid/:Cid', PaymentInit);
 
-router.post('/success', PaymentSuccess)
+router.post('/success', PaymentSuccess);
 
 router.post('/fail', async(req, res, next)=>{
     return res.status(200).json({
         data: req.body
     })
-})
+});
 
 router.post('/cancel', async(req, res, next)=>{
     return res.status(200).json({
         data: req.body
     })
-})
+});
 
 router.post('/ipn', async(req, res, next)=>{
     return res.status(200).json({
         data: req.body
     })
-})
+});
 
 module.exports = router;

@@ -1,12 +1,12 @@
 const services = require("../services/user.services");
+const {ProfileNotFound} = require('../config/user.error')
 
 const getUserProfile = async (req, res, next) => {
   try {
     const userProfile = await services.GetUserProfile(req.user._id);
     res.status(200).json(userProfile);
   } catch (error) {
-    console.log(error);
-    next(error);
+    next(new ProfileNotFound("Profile Not Found"));
   }
 };
 
@@ -22,8 +22,7 @@ const updateuserProfile = async (req, res, next) => {
     const result = await services.UserProfilUpdate(req.user._id, profileBody);
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
-    next(error);
+    next(new ProfileNotFound("Profile Not Found"));
   }
 };
 
@@ -33,8 +32,7 @@ const getPaymentHistory = async (req, res, next) => {
     const userPayment = await services.GetUserPayment(userId);
     res.status(200).send(userPayment);
   } catch (error) {
-    console.log(error);
-    next(error)
+    next(new ProfileNotFound("Profile Not Found"));
   }
 };
 
@@ -45,7 +43,6 @@ const getAllUserList = async (req, res, next) =>{
       res.status(200).send(userList);
       
     } catch (error) {
-      console.log(error);
       next(error);
     }
 }
@@ -53,11 +50,10 @@ const getAllUserList = async (req, res, next) =>{
 const getUserProfileById = async (req,res,next)=>{
   const userId = req.params.userId;
   try {
-    const userProfile = await services.GetUserProfile(userId);
+    const userProfile = await services.GetUserProfilebyId(userId);
     res.status(200).json(userProfile);
   } catch (error) {
-    console.log(error);
-    next(error);
+    next(new ProfileNotFound("Profile Not Found"));
   }
 }
 

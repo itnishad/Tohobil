@@ -12,6 +12,25 @@ const deletedUser = async(req, res, next)=>{
     
 }
 
+const userVerifi = (req, res, next) =>{
+    const body = JSON.parse(req.body.data);
+    const files = req.files;
+
+    const workImgArray = files['workImg'].map(item=> item.filename);
+
+    const userObject = {
+        ...body,
+        photograph: files['photograph'][0].filename,
+        documentFile:files['documentFile'][0].filename,
+        workImg: workImgArray
+    }
+
+    res.status(201).json({
+        message:"Done"
+    })
+}
+
 module.exports = {
-    DeletedUser: deletedUser
+    DeletedUser: deletedUser,
+    UserVerifi: userVerifi
 }

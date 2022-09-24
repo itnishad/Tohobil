@@ -28,7 +28,7 @@ const getUserList = async()=>{
 
 const getUserProfilebyId = async(id)=>{
     const userProfile = await Profile.find({user: id})
-    .populate({path:"user"})
+    .populate({path:"user"});
     return userProfile;
 }
 

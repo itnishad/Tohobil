@@ -2,6 +2,7 @@ const { response } = require("../../../app");
 const services = require("../services/payment.services");
 const SSLCommerzPayment = require("sslcommerz-lts");
 const axios = require("axios");
+const {CampaignNotFound} = require('../../campaigns/config/payment.error');
 
 const paymentInit = async (req, res, next) => {
   const { name, email, amount, phone, city } = req.body;
@@ -117,9 +118,15 @@ const paymentSuccess = async (req, res, next) => {
 };
 
 const campaignPaymentHistory = async(req, res, next)=>{
-  const campaignId = req.params.campaignId;
-  const campaignHistoryRes = await services.CampaignHistory(campaignId);
-  res.json(campaignHistoryRes);
+
+  try {
+    const campaignId = req.params.campaignId;
+    const campaignHistoryRes = await services.CampaignHistory(campaignId);
+    res.json(campaignHistoryRes);
+  } catch (error) {
+    next(new CampaignNotFound("Campaign Not Found"));
+  }
+  
 }
 
 module.exports = {

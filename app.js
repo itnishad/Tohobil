@@ -42,19 +42,23 @@ app.use('/v1/admin', require('./modules/admin/router'));
 
 require('./modules/auth/config/passport');
 
+//Custom Error Handler
+app.use('*', require('./modules/core/bad-request-error'));
+app.use(require('./modules/core/user-error-handler'));
+app.use(require('./modules/core/server-error'))
 
-app.use('*', (req, res, next)=>{
-    res.status(400).json({
-        "message":"No Data"
-    })
-})
+// app.use('*', (req, res, next)=>{
+//     res.status(400).json({
+//         "message":"Bad Request No Api Found"
+//     })
+// })
 
-app.use((error, req, res, next)=>{
-    console.log(error);
-    res.status(500).json({
-        message: "There is and Server Side error"
-    })
-})
+// app.use((error, req, res, next)=>{
+//     console.log(error);
+//     res.status(500).json({
+//         message: "There is and Server Side error"
+//     })
+// })
 
 require('./modules/users/events')(app);
 

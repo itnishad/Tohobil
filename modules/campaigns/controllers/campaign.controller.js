@@ -1,4 +1,5 @@
 const campaignServices = require("../services/campaign.services");
+const {CampaignNotFound} = require('../config/payment.error');
 
 const createCampaign = async (req, res, next) => {
   let body = JSON.parse(req.body.data);
@@ -14,7 +15,6 @@ const createCampaign = async (req, res, next) => {
       message: "Campaign Create Sussessfully.",
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -36,12 +36,11 @@ const getCampaign = async (req, res, next) => {
     const campaignId = req.params.id;
     const sCampaign = await campaignServices.SingleCampaign(campaignId);
     if (sCampaign.length <= 0) {
-      throw new Error("campaign not found");
+      throw new CampaignNotFound("campaign not found");
     }
     res.status(200).json(sCampaign);
   } catch (error) {
-    console.log(error);
-    next(error);
+    next(new CampaignNotFound("campaign not found"));
   }
 };
 
@@ -50,12 +49,11 @@ const getUserCampaign = async (req, res, next) => {
     const campaignId = req.params.id;
     let uCampaign = await campaignServices.UserCampaign(campaignId);
     if (uCampaign.length <= 0) {
-      throw new Error("campaign not found");
+      throw new CampaignNotFound("campaign not found");
     }
     res.status(200).send(uCampaign);
   } catch (error) {
-    console.log(error);
-    next(error);
+    next(new CampaignNotFound("campaign not found"));
   }
 };
 
@@ -78,7 +76,7 @@ const updateCampaign = async (req, res, next) => {
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new CampaignNotFound("campaign not found"));
   }
 };
 
@@ -89,7 +87,7 @@ const inactiveACampaign = async(req, res, next)=>{
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new CampaignNotFound("campaign not found"));
   }
 }
 
@@ -101,7 +99,7 @@ console.log(campaignId)
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new CampaignNotFound("campaign not found"));
   }
 
 }
