@@ -18,16 +18,13 @@
         GetAllCampaign,
         GetCampaign,
         GetUserCampaign,
-        UpdateCampaign,
-        InactiveACampaign,
-        ActiveACampaign} = require('./controllers/campaign.controller')
+        UpdateCampaign,} = require('./controllers/campaign.controller')
 
 router.get('/get-all-campaigns', GetAllCampaign);
 router.get('/details/:id', GetCampaign);
 
 
-
- router.all('*', passport.authenticate('jwt', {session: false}))
+ router.all('*', passport.authenticate('jwt', {session: false}));
 
 router.post('/update/:id',Imguploder, UpdateCampaign);
 
@@ -37,9 +34,7 @@ router.get('/userCampaign/:id', GetUserCampaign);
 
 //Admin Route
 
-router.put('/inActive/:id', InactiveACampaign);
 
-router.put('/Active/:id', ActiveACampaign);
  
  
  module.exports = router;

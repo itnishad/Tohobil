@@ -20,14 +20,19 @@ let options = {
 const jwtStrategy = new JWTStrategy(options, async(jwtPayload, done)=>{
         
     try {
+
         const user = await User.findById(jwtPayload.id);
         if(user){
             // if (jwtPayload.iss) {
             //     user["issuer"] = jwtPayload.iss;
             //     console.log(user)
             // }
+            if(jwtPayload.exp < Date.now() /1000){
+                return done(null, false);
+            }
             return done(null, user)
         }
+
         return done(null, false)
 
     } catch (error) {

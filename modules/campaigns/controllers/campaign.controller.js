@@ -80,36 +80,10 @@ const updateCampaign = async (req, res, next) => {
   }
 };
 
-const inactiveACampaign = async(req, res, next)=>{
-  const campaignId = req.params.id;
-  try {
-    const result = await campaignServices.UpdateToInactive(campaignId);
-    res.status(200).json(result);
-  } catch (error) {
-    console.log(error);
-    next(new CampaignNotFound("campaign not found"));
-  }
-}
-
-const activeACampaign = async(req, res, next)=>{
-  const campaignId = req.params.id;
-console.log(campaignId)
-  try {
-    const result = await campaignServices.UpdateToActive(campaignId);
-    res.status(200).json(result);
-  } catch (error) {
-    console.log(error);
-    next(new CampaignNotFound("campaign not found"));
-  }
-
-}
-
 module.exports = {
   CreateCampaign: createCampaign,
   GetAllCampaign: getAllCampaigns,
   GetCampaign: getCampaign,
   GetUserCampaign: getUserCampaign,
   UpdateCampaign: updateCampaign,
-  InactiveACampaign: inactiveACampaign,
-  ActiveACampaign: activeACampaign
 };

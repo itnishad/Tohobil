@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const userVerificationSchema = new mongoose.Schema({
 
+    campaignId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Campaign"
+    },
+
     name:{
         type:String,
         trim: true

@@ -65,24 +65,10 @@ const updateCampaignBody = async(_id,updateBody)=>{
   })
 }
 
-const updateToInactive = async(_id)=>{
-  return result = await Campaign.findOneAndUpdate({_id},{active: false},{
-    new: true
-  })
-}
-
-const updateToActive = async(_id)=>{
-  return result = await Campaign.findOneAndUpdate({_id},{active: true},{
-    new: true
-  })
-}
-
 module.exports = {
   CreateACampaign: createACampaign,
   AllCampaign: allCampaign,
   SingleCampaign: singleCampaign,
   UserCampaign: userCampaign,
   UpdateCampaignBody:updateCampaignBody,
-  UpdateToInactive: updateToInactive,
-  UpdateToActive: updateToActive
 };
